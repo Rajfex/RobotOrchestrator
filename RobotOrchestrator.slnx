@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Shared/">
+    <Project Path="Orchestrator.Core/Orchestrator.Core.csproj" />
+  </Folder>
+  <Project Path="Orchestrator.Robots.API/Orchestrator.Robots.API.csproj" />
+  <Project Path="Orchestrator.UI.API/Orchestrator.UI.API.csproj" />
+  <Project Path="Robot.Flashscore/Robot.Flashscore.csproj" Id="50aa258b-d3ba-4d5a-989a-fea181b71503" />
+  <Project Path="Robot.Stocks/Robot.Stocks.csproj" Id="5fc7f36a-af5d-4a28-b1e0-9a3c189daca0" />
+</Solution>
