@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Playwright;
+using Robot.Flashscore;
 using Robot.Models;
 
 namespace Robot.Automations
@@ -18,6 +19,8 @@ namespace Robot.Automations
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{});
+
+            var email = new Emails();
 
             var context = await browser.NewContextAsync();
             var page = await context.NewPageAsync();
@@ -69,6 +72,7 @@ namespace Robot.Automations
                     allLeaguesData.Add(leagueResult);
                 }
 
+                email.SendEmail("mail@local.com", "Fetched data", "Your data is ready visit orkiestrator robot webiste.");
                 return allLeaguesData;
             }
             catch (Exception ex)

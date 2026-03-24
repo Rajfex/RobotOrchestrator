@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Playwright;
+using Robot.Flashscore;
 using Robot.Stocks.Models;
 
 namespace Robot.Stocks
@@ -20,6 +21,8 @@ namespace Robot.Stocks
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{});
+
+            var mail = new Emails();
 
             var context = await browser.NewContextAsync();
             var page = await context.NewPageAsync();
@@ -56,6 +59,7 @@ namespace Robot.Stocks
                         stockInfoData.Add(stockData);
                     }
                 }
+                mail.SendEmail("mail@local.html", "Fetched data", "Your data is ready visit orkiestrator robot webiste.");
                 await SendNotificationAsync("Stocks robot finished fetching data");
                 return stockInfoData;
             }
