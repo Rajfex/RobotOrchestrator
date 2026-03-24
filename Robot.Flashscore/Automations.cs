@@ -1,13 +1,20 @@
-﻿using Robot.Models;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Playwright;
 using Robot.Models;
-using static Robot.Flashscore.Program;
 
 namespace Robot.Automations
 {
-    public static class Automations
+    public class Automations
     {
-        public static async Task<List<LeagueResult>> GetLeaguesInfoAsync(List<FootballLeagueInfo> leagueInfos)
+        private readonly string _notificationHubUrl;
+        private HubConnection? _hubConnection;
+
+        public Automations(string notificationHubUrl)
+        {
+            _notificationHubUrl = notificationHubUrl;
+        }
+
+        public async Task<List<LeagueResult>> GetLeaguesInfoAsync(List<FootballLeagueInfo> leagueInfos)
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{});
@@ -19,6 +26,7 @@ namespace Robot.Automations
 
             try
             {
+                await SendNotificationAsync("Flashscore robot fetching data");
                 foreach (var leagueInfo in leagueInfos)
                 {
                     string country = leagueInfo.Country.ToLower();
@@ -69,7 +77,45 @@ namespace Robot.Automations
             }
             finally
             {
+                await SendNotificationAsync("Flashscore robot finished fetching data");
+
+                if (_hubConnection != null)
+                {
+                    await _hubConnection.DisposeAsync();
+                }
+
                 await browser.CloseAsync();
+            }
+        }
+
+        private async Task SendNotificationAsync(string message)
+        {
+            try
+            {
+                if (_hubConnection == null)
+                {
+                    _hubConnection = new HubConnectionBuilder()
+                        .WithUrl(_notificationHubUrl, options =>
+                        {
+                            options.HttpMessageHandlerFactory = _ => new HttpClientHandler
+                            {
+                                ServerCertificateCustomValidationCallback =
+                                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                            };
+                        })
+                        .WithAutomaticReconnect()
+                        .Build();
+                }
+
+                if (_hubConnection.State == HubConnectionState.Disconnected)
+                {
+                    await _hubConnection.StartAsync();
+                }
+
+                await _hubConnection.InvokeAsync("SendNotification", message);
+            }
+            catch
+            {
             }
         }
     }

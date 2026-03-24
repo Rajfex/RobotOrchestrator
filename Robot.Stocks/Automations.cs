@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Playwright;
 using Robot.Stocks.Models;
 
@@ -8,7 +9,14 @@ namespace Robot.Stocks
 {
     public class Automations
     {
-        public static async Task<List<StockData>> GetStockData(List<Stock> stockInfo)
+        private readonly string _notificationHubUrl;
+        private HubConnection? _hubConnection;
+
+        public Automations(string notificationHubUrl)
+        {
+            _notificationHubUrl = notificationHubUrl;
+        }
+        public async Task<List<StockData>> GetStockData(List<Stock> stockInfo)
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions{});
@@ -19,6 +27,7 @@ namespace Robot.Stocks
 
             try
             {
+                await SendNotificationAsync("Stocks robot fetching data");
                 await page.GotoAsync("https://www.bankier.pl/gielda/notowania/");
                 await AcceptCookiesIfVisible(page);
 
@@ -47,6 +56,7 @@ namespace Robot.Stocks
                         stockInfoData.Add(stockData);
                     }
                 }
+                await SendNotificationAsync("Stocks robot finished fetching data");
                 return stockInfoData;
             }
             catch (Exception ex)
@@ -165,5 +175,38 @@ namespace Robot.Stocks
 
             return stockData;
         }
+
+        private async Task SendNotificationAsync(string message)
+        {
+            try
+            {
+                if (_hubConnection == null)
+                {
+                    _hubConnection = new HubConnectionBuilder()
+                        .WithUrl(_notificationHubUrl, options =>
+                        {
+                            options.HttpMessageHandlerFactory = _ => new HttpClientHandler
+                            {
+                                ServerCertificateCustomValidationCallback =
+                                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                            };
+                        })
+                        .WithAutomaticReconnect()
+                        .Build();
+                }
+
+                if (_hubConnection.State == HubConnectionState.Disconnected)
+                {
+                    await _hubConnection.StartAsync();
+                }
+
+                await _hubConnection.InvokeAsync("SendNotification", message);
+            }
+            catch
+            {
+            }
+        }
+
+
     }
 }

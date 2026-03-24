@@ -3,6 +3,7 @@ using Microsoft.OpenApi;
 using Orchestrator.Core;
 using Orchestrator.Core.Data;
 using Orchestrator.Core.Models;
+using Orchestrator.UI.API.Hubs;
 using Orchestrator.UI.API.Interfaces;
 using Orchestrator.UI.API.Services;
 
@@ -16,6 +17,7 @@ namespace Orchestrator.UI.API
 
 
             builder.Services.AddControllers();
+            builder.Services.AddSignalR();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -28,12 +30,12 @@ namespace Orchestrator.UI.API
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
+                options.AddDefaultPolicy(policy =>
                 {
-                    policy
-                        .AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
                 });
             });
 
@@ -51,10 +53,12 @@ namespace Orchestrator.UI.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orchestrator API V1");
             });
 
+            app.MapHub<NotificationHub>("/notifications");
+
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
-            app.UseCors("AllowAll");
+            app.UseCors();
 
 
             using (var scope = app.Services.CreateScope())

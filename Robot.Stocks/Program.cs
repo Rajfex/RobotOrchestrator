@@ -14,6 +14,7 @@ namespace Robot.Stocks
         static async Task Main(string[] args)
         {
             var baseUrl = "https://localhost:7028/";
+            var notificationHubUrl = "https://localhost:7006/notifications";
             var apiKey = "DWNvDCd4jUiWLe2v3MA9tA";
 
             var connectionString = "Server=(localdb)\\mssqllocaldb;Database=OrchestratorDb;Trusted_Connection=True;";
@@ -68,7 +69,8 @@ namespace Robot.Stocks
                         }
                         var data = JsonSerializer.Deserialize<Dictionary<string, List<Stock>>>(stocksJson);
                         Stock[] stockArray = data["StocksInfo"].ToArray();
-                        var output = await Automations.GetStockData(stockArray.ToList());
+                        var automations = new Automations(notificationHubUrl);
+                        var output = await automations.GetStockData(stockArray.ToList());
 
                         var outputJson = JsonNode.Parse(JsonSerializer.Serialize(output));
                         var resultBody = new JsonObject

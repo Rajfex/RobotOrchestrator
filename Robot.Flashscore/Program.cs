@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Orchestrator.Core;
 using Orchestrator.Core.Data;
+using Robot.Automations;
 using Robot.Models;
 
 namespace Robot.Flashscore
@@ -21,6 +22,7 @@ namespace Robot.Flashscore
         {
 
             var baseUrl = "https://localhost:7028/";
+            var notificationHubUrl = "https://localhost:7006/notifications";
             var apiKey = "NicutsVs0aF8Tm7szH8vA";
 
             var connectionString = "Server=(localdb)\\mssqllocaldb;Database=OrchestratorDb;Trusted_Connection=True;";
@@ -93,7 +95,8 @@ namespace Robot.Flashscore
 
                         Console.WriteLine($"{DateTime.Now}: Data collected:");
                         _logger.Log(taskId, $"[ROBOT] Data collected", 1);
-                        var result = await Automations.Automations.GetLeaguesInfoAsync(leagues);
+                        var automations = new Automations.Automations(notificationHubUrl);
+                        var result = await automations.GetLeaguesInfoAsync(leagues);
 
                         var output = JsonNode.Parse(JsonSerializer.Serialize(result));
                         var resultBody = new JsonObject
