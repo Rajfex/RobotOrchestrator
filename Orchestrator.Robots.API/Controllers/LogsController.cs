@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Orchestrator.Core.Data;
 
 namespace Orchestrator.Robots.API.Controllers
@@ -13,10 +12,22 @@ namespace Orchestrator.Robots.API.Controllers
             _context = context;
         }
 
-        [HttpGet("/api/logs")]
-        public IActionResult GetLogs()
+        [HttpGet("/api/logs/{pageNumber:int}")]
+        public IActionResult GetLogs(int pageNumber)
         {
-            var logs = _context.Logs.ToList();
+            if (pageNumber < 1)
+            {
+                return BadRequest("Page number must be higher than 0.");
+            }
+
+            const int pageSize = 50;
+
+            var logs = _context.Logs
+                .OrderByDescending(l => l.Created)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
             return Ok(logs);
         }
     }
