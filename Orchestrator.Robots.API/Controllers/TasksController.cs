@@ -9,6 +9,7 @@ namespace Orchestrator.Robots.API.Controllers
     public class CreateTaskRequest
     {
         public JsonElement InputData { get; set; }
+        public string Name { get; set; }
     }
 
     public class ApiTasksBody
@@ -39,7 +40,7 @@ namespace Orchestrator.Robots.API.Controllers
                 return BadRequest("Input data is required.");
             }
             var json = request.InputData.GetRawText();
-            var success = await _tasksService.CreateTaskAsync(json);
+            var success = await _tasksService.CreateTaskAsync(json, request.Name);
             if (!success)
             {
                 _logger.Log(Guid.Empty, "[POST] task creation failed", 3);

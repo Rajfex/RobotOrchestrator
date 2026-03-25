@@ -12,6 +12,8 @@ namespace Orchestrator.Core.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [Required]
+        public string Name { get; set; }
+        [Required]
         public string InputData { get; set; }
         public string OutputData { get; set; }
         [Required]

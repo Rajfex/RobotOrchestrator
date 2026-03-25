@@ -16,10 +16,11 @@ namespace Orchestrator.Robots.API.Services
             _context = context;
         }
 
-        public async Task<bool> CreateTaskAsync(string inputData)
+        public async Task<bool> CreateTaskAsync(string inputData, string name)
         {
             var task = new Core.Models.Task
             {
+                Name = name,
                 InputData = inputData,
                 OutputData = string.Empty,
                 TaskStatusId = 1,
