@@ -15,7 +15,6 @@ namespace Orchestrator.Core
             _context = context;
         }
 
-
         public void Log(Guid taskID, string message, int type)
         {
             Log logToSave = new Log

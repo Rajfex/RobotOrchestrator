@@ -97,7 +97,6 @@ namespace Robot.Stocks
                         _logger.Log(taskId, "[Robot] Task completed", 1);
 
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -107,7 +106,6 @@ namespace Robot.Stocks
 
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
-
         }
     }
 }

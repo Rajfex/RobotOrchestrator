@@ -11,9 +11,13 @@ namespace Orchestrator.Core.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         public Guid TaskId { get; set; }
+
         public string Message { get; set; }
+
         public int LogTypeId { get; set; }
+
         public DateTime Created { get; set; } = DateTime.Now;
     }
 }

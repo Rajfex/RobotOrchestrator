@@ -36,6 +36,7 @@ namespace Orchestrator.Robots.API.Controllers
         public class CreateRobotBody
         {
             public string Name { get; set; }
+
             public string? ApiKey { get; set; }
         }
 

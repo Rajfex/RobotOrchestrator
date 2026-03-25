@@ -15,7 +15,6 @@ namespace Orchestrator.UI.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             builder.Services.AddControllers();
             builder.Services.AddSignalR();
 
@@ -59,7 +58,6 @@ namespace Orchestrator.UI.API
             app.UseAuthorization();
             app.MapControllers();
             app.UseCors();
-
 
             using (var scope = app.Services.CreateScope())
             {

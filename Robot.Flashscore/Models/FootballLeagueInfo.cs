@@ -9,6 +9,7 @@ namespace Robot.Models
     {
         [JsonPropertyName("country")]
         public string Country { get; set; }
+
         [JsonPropertyName("leagueName")]
         public string LeaguseName { get; set; }
     }

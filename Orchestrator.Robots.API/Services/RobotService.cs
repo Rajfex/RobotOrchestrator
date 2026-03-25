@@ -121,7 +121,6 @@ namespace Orchestrator.Robots.API.Services
             return true;
         }
 
-
         public async Task<Orchestrator.Core.Models.Robot> CreateRobotAsync(string name, string? apiKey = null)
         {
             var robot = new Orchestrator.Core.Models.Robot

@@ -11,13 +11,18 @@ namespace Orchestrator.Core.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string InputData { get; set; }
+
         public string OutputData { get; set; }
+
         [Required]
         public int TaskStatusId { get; set; }
+
         public Guid RobotId { get; set; }
     }
 }

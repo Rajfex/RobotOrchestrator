@@ -7,6 +7,7 @@ namespace Orchestrator.UI.API.Controllers
     public class RegisterRequest
     {
         public string Username { get; set; } = string.Empty;
+
         public string Password { get; set; } = string.Empty;
     }
 
@@ -16,6 +17,7 @@ namespace Orchestrator.UI.API.Controllers
     {
         private IAccountService _accountService;
         private Logger _logger;
+
         public AccountController(IAccountService accountService, Logger logger)
         {
             _accountService = accountService;

@@ -7,6 +7,7 @@ namespace Robot.Models
     public class LeagueResult
     {
         public string LeagueName { get; set; }
+
         public List<TeamStanding> Teams { get; set; } = new();
     }
 }

@@ -68,8 +68,6 @@ namespace Robot.Stocks
                 Console.WriteLine("Error: " + ex.Message);
                 return stockInfoData;
             }
-
-
         }
 
         private static async Task AcceptCookiesIfVisible(IPage page)
@@ -128,9 +126,7 @@ namespace Robot.Stocks
 
                 var metricName = (await nameLocator.InnerTextAsync()).Trim();
                 var metricValue = (await contentLocator.InnerTextAsync()).Trim();
-                var metricDate = await dateLocator.CountAsync() > 0
-                    ? (await dateLocator.InnerTextAsync()).Trim()
-                    : null;
+                var metricDate = await dateLocator.CountAsync() > 0 ? (await dateLocator.InnerTextAsync()).Trim() : null;
 
                 switch (metricName)
                 {
@@ -210,7 +206,5 @@ namespace Robot.Stocks
             {
             }
         }
-
-
     }
 }

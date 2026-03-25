@@ -9,12 +9,14 @@ namespace Orchestrator.Robots.API.Controllers
     public class CreateTaskRequest
     {
         public JsonElement InputData { get; set; }
+
         public string Name { get; set; }
     }
 
     public class ApiTasksBody
     {
         public System.Guid? RobotId { get; set; }
+
         public JsonElement InputData { get; set; }
     }
 
@@ -62,8 +64,6 @@ namespace Orchestrator.Robots.API.Controllers
             return Ok(tasks);
         }
 
-    
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskById([FromRoute] System.Guid id)
         {
@@ -82,6 +82,7 @@ namespace Orchestrator.Robots.API.Controllers
         public class IdResultsBody
         {
             public System.Text.Json.JsonElement OutputData { get; set; }
+
             public int? StatusId { get; set; }
         }
 
@@ -134,6 +135,5 @@ namespace Orchestrator.Robots.API.Controllers
 
             return Ok();
         }
-        
     }
 }

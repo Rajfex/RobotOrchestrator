@@ -15,7 +15,6 @@ namespace Orchestrator.Robots.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -53,7 +52,6 @@ namespace Orchestrator.Robots.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orchestrator API V1");
             });
-
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
