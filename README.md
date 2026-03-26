@@ -6,7 +6,8 @@ Orchestrator is a web application built with ASP.NET Core APIs, designed to mana
  - **Task Orchestration:** Create and manage tasks for robot execution.
  - **Robots Management:** Register robots, validate API keys, and track robot status.
  - **Result Processing** Submit and store task outputs from connected robots.
- - **•	Multiple Robot Types:** Display system logs returned by the backend, including task‑related messages.
+ - **Pagination:** Paginated output for logs to improve performance.
+ - **Multiple Robot Types:** Display system logs returned by the backend, including task‑related messages.
  - **API Integration:** upports dedicated robots (e.g., Flashscore and Stocks).
 
 ## Technologiesa
