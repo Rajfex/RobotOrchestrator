@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.IdentityModel.Tokens;
 using Orchestrator.Core.Data;
 using Orchestrator.Core.Models;
-using Orchestrator.UI.API.Interfaces;
 
 namespace Orchestrator.UI.API.Services
 {

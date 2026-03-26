@@ -4,7 +4,6 @@ using Orchestrator.Core;
 using Orchestrator.Core.Data;
 using Orchestrator.Core.Models;
 using Orchestrator.UI.API.Hubs;
-using Orchestrator.UI.API.Interfaces;
 using Orchestrator.UI.API.Services;
 
 namespace Orchestrator.UI.API

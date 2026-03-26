@@ -1,4 +1,4 @@
-﻿namespace Orchestrator.UI.API.Interfaces
+﻿namespace Orchestrator.UI.API.Services
 {
     public interface IAccountService
     {

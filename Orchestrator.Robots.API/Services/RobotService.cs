@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Orchestrator.Core.Data;
-using Orchestrator.Robots.API.Interfaces;
 using System.Text.Json;
 
 namespace Orchestrator.Robots.API.Services

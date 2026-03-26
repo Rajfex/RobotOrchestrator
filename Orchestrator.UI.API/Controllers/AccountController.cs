@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Orchestrator.Core;
-using Orchestrator.UI.API.Interfaces;
+using Orchestrator.UI.API.Services;
 
 namespace Orchestrator.UI.API.Controllers
 {
